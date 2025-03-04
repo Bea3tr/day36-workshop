@@ -2,6 +2,8 @@ import { Component, OnInit, ResourceStreamItem } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FileuploadService } from '../services/fileupload.service';
+import { db } from '../shared/app.db';
+import { liveQuery } from 'dexie';
 
 @Component({
   selector: 'app-upload',
@@ -15,10 +17,18 @@ export class UploadComponent implements OnInit {
   dataUri!: string;
   blob!: Blob;
 
+  citiesList$: any
+  selectedCity: string = ''
+
   constructor(private router:Router, private fb:FormBuilder, private fileuploadService:FileuploadService) {}
 
   ngOnInit(): void {
     this.createForm();
+    this.loadCities();
+  }
+
+  loadCities() {
+    this.citiesList$ = liveQuery(() => db.cities.reverse().toArray())
   }
 
   onFileChange(event: Event){
@@ -52,6 +62,7 @@ export class UploadComponent implements OnInit {
   upload(){
     console.log("upload an image");
     console.log(this.dataUri);
+    console.log('Selected city: ' + this.selectedCity);
     if(!this.dataUri){
       return;
     }
