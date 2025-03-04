@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import csf.server.models.Post;
 import csf.server.services.FileUploadService;
+import csf.server.services.S3Service;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 
@@ -32,6 +33,9 @@ public class FileUploadController {
     @Autowired
     private FileUploadService fileUploadSvc;
 
+    @Autowired
+    private S3Service s3Service;
+
     @PostMapping(path="/post", consumes=MediaType.MULTIPART_FORM_DATA_VALUE,
         produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> upload(
@@ -42,6 +46,11 @@ public class FileUploadController {
         try {
             postId = fileUploadSvc.upload(file, comments);
             System.out.println(">>> Post ID: " + postId);
+            if(postId != null && !postId.isEmpty()) {
+                String uploaded = s3Service.upload(file, comments, postId);
+                System.out.println("S3 upload: " + uploaded);
+            }
+                
         } catch (SQLException | IOException ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ex.getMessage());
