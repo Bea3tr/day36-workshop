@@ -53,7 +53,7 @@ public class S3Service {
             fileNameExt = fileNameExt + ".png";
 
         // Set filename - <postId>.<fileNameExt>
-        PutObjectRequest req = new PutObjectRequest(bucketName, "%s.%s".formatted(postId, fileNameExt), 
+        PutObjectRequest req = new PutObjectRequest(bucketName, "%s.%s".formatted(postId, "png"), 
             file.getInputStream(), metadata);
         req.withCannedAcl(CannedAccessControlList.PublicRead);
         s3Client.putObject(req);
