@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UploadComponent } from './components/upload.component';
 import { ViewImageComponent } from './components/view-image.component';
+import { DirectUploadComponent } from './components/direct-upload.component';
 
 const routes: Routes = [
   {path:"", component: UploadComponent},
+  {path: 'direct', component: DirectUploadComponent},
   {path:"image/:postId", component: ViewImageComponent},
   {path:"**", redirectTo:"/", pathMatch:"full"}
 ];

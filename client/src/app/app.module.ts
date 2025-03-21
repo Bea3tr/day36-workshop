@@ -9,9 +9,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { DirectUploadComponent } from './components/direct-upload.component';
 
 @NgModule({
-  declarations: [ AppComponent, UploadComponent, ViewImageComponent ],
+  declarations: [ AppComponent, UploadComponent, ViewImageComponent, DirectUploadComponent ],
   imports: [ BrowserModule, AppRoutingModule, MaterialModule, ReactiveFormsModule ],
   providers: [ provideAnimationsAsync(), provideHttpClient(withInterceptorsFromDi()) ],
   bootstrap: [ AppComponent ]

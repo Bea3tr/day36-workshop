@@ -39,14 +39,14 @@ public class FileUploadController {
     @PostMapping(path="/post", consumes=MediaType.MULTIPART_FORM_DATA_VALUE,
         produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> upload(
-        @RequestPart("file") MultipartFile file,
-        @RequestPart("comments") String comments) {
+        @RequestPart(value="file", required=false) MultipartFile file,
+        @RequestPart(value="comments", required=false) String comments) {
             
         String postId = "";
         try {
             postId = fileUploadSvc.upload(file, comments);
             System.out.println(">>> Post ID: " + postId);
-            if(postId != null && !postId.isEmpty()) {
+            if(postId != null && !postId.isEmpty() && file != null) {
                 String uploaded = s3Service.upload(file, comments, postId);
                 System.out.println("S3 upload: " + uploaded);
             }

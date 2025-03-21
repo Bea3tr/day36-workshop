@@ -41,7 +41,10 @@ public class FileUploadRepository {
                     .replace("-", "").substring(0, 8);
                 ps.setString(1, postId);
                 ps.setString(2, comments);
-                ps.setBytes(3, file.getBytes());
+                if(file == null)
+                    ps.setBytes(3, null);
+                else
+                    ps.setBytes(3, file.getBytes());
                 ps.executeUpdate();
                 return postId;
         }

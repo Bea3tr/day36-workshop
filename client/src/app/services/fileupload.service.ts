@@ -17,6 +17,10 @@ export class FileuploadService {
     return lastValueFrom(this.httpClient.post<UploadResult>('/api/post', formData));
   }
 
+  directUpload(formData: FormData) {
+    return lastValueFrom(this.httpClient.post<UploadResult>('/api/post', formData));
+  }
+
   getImage(postId: string){
     return lastValueFrom(this.httpClient.get<UploadResult>(`/api/get-image/${postId}`));
   }
